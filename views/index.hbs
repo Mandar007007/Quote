@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+	background: #aaa;
+	display: flex;
+	height: 100vh;
+	font-size: 1.5em;
+}
+
+div {
+	position: relative;
+	width: 600px;
+	margin: auto;
+	padding: 1rem;
+	background-color: transparent;
+	background-image: linear-gradient(
+			-45deg,
+			transparent,
+			transparent 2%,
+			white 2%,
+			white 85%,
+			transparent,
+			85%,
+			transparent
+		),
+		linear-gradient(to bottom right, #2ad, #2ad 90%, transparent 90%);
+	background-position: top left, 0.2em 0.2em;
+	background-repeat: no-repeat;
+	filter: drop-shadow(0 0 15px #0005);
+}
+
+div::before,
+div::after {
+	position: absolute;
+	z-index: -1;
+	display: block;
+	width: 3rem;
+	height: 4rem;
+	content: "";
+	z-index: 0;
+	font-size: 8rem;
+	font-family: Georgia, Times, Garamond, serif;
+}
+
+div::before {
+	top: -2rem;
+	left: 1rem;
+	content: open-quote;
+}
+
+div::after {
+	bottom: -1rem;
+	right: 1rem;
+	content: close-quote;
+}
+
+div::before,
+div::after,
+div h2 {
+	text-shadow: -2px 2px #fff, -1.5px 1.5px #fff, -1px 1px #fff, -0.5px 0.5px #fff;
+}
+
+h2 {
+	margin-block-end: 1rem;
+}
+
+p {
+	margin-block-start: 1rem;
+	text-indent: 2ch;
+}
+.myButton {
+	box-shadow:inset 0px 0px 15px 3px #23395e;
+	background:linear-gradient(to bottom, #2e466e 5%, #415989 100%);
+	background-color:#2e466e;
+	border-radius:17px;
+	border:1px solid #1f2f47;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:6px 13px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
+	background-color:#415989;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+    </style>
+      <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+<body>
+    <div data-aos="fade-right">
+        <h2></h2>
+        <p id="quote"></p>
+        <h4 align="right" id="author"></h4>
+        <a href="#" onclick="getQuotes()" class="myButton">New Quotes</a>
+    </div>
+    
+        
+    </div>
+
+    <script>
+        let realData = "";
+
+        const getQuotes = async () => {
+        const api = "https://type.fit/api/quotes";
+        try{
+            let data = await fetch(api);
+            let realData = await data.json();
+            let num = Math.floor(Math.random()*10);
+            let ele = document.getElementById('quote')
+            ele.innerText = `${realData[num].text}`;
+            ele = document.getElementById("author")
+            ele.innerText = `-${realData[num].author}`
+            console.log(ele)
+        
+        }catch(error){}
+
+        }
+
+        getQuotes();
+    </script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        offset:200,
+        delay:1,
+        duration:1000
+      });
+    </script>
+</body>
+</html>
